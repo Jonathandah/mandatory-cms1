@@ -1,29 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
-import axios from "axios";
-import Home from "./components/Home";
-import Blog from "./components/Blog";
-import List from "./components/List";
-import "./css/App.css";
-
-function getArticle(id) {
-  console.log(id);
-  axios
-    .get(
-      `http://localhost:8080/api/collections/get/Post?token=79e0270984c18ff8447814563d5a1f&filter[_id]=${id}`
-    )
-    .then(response => {
-      console.log(response);
-    });
-}
+import React, { useEffect, useState } from 'react';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
+import axios from 'axios';
+import Home from './components/Home';
+import Blog from './components/Blog';
+import List from './components/List';
+import './css/App.css';
 
 function App() {
   const [posts, updatePosts] = useState([]);
+  const [selectedPost, updateSelectedPost] = useState({});
 
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8080/api/collections/get/Post?token=79e0270984c18ff8447814563d5a1f"
+        'http://localhost:8080/api/collections/get/Post?token=79e0270984c18ff8447814563d5a1f'
       )
       .then(response => {
         console.log(response);
@@ -31,20 +21,37 @@ function App() {
       });
   }, []);
 
+  function getArticle(id) {
+    console.log(id);
+    axios
+      .get(
+        `http://localhost:8080/api/collections/get/Post?token=79e0270984c18ff8447814563d5a1f&filter[_id]=${id}`
+      )
+      .then(response => {
+        console.log(response);
+        updateSelectedPost(response);
+      });
+  }
+
   return (
     <Router>
-      <div className="App">
-        <header className="App__header">{}</header>
-        <main className="App__main">
+      <div className='App'>
+        <header className='App__header'>{}</header>
+        <main className='App__main'>
           <Route
             exact
-            path="/"
+            path='/'
             render={() => <Home posts={posts} getArticle={getArticle} />}
           />
-          <Route path="/blog" component={Blog} />
-          <Route path="/list" component={List} />
+          {selectedPost.data ? (
+            <Route
+              path='/blog'
+              render={() => <Blog selectedPost={selectedPost} />}
+            />
+          ) : null}
+          <Route path='/list' component={List} />
         </main>
-        <footer className="App__footer">{}</footer>
+        <footer className='App__footer'>{}</footer>
       </div>
     </Router>
   );

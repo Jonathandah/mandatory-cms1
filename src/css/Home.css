@@ -9,7 +9,7 @@
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: center;
+
   flex-direction: row;
   flex-wrap: wrap;
   padding: 0%;
@@ -20,11 +20,11 @@
   position: relative;
   list-style: none;
   height: 40%;
-  width: 26%;
+  width: 15%;
   border: 1px solid rgba(0, 0, 0, 0.116);
   box-shadow: 6px 6px 5px #80808026;
   border-radius: 4%;
-  margin-left: 3%;
+  margin-left: 4%;
   margin-top: 3%;
 }
 

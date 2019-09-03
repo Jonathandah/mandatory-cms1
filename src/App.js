@@ -1,17 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
+import axios from "axios";
 import Home from "./components/Home";
 import Blog from "./components/Blog";
 import List from "./components/List";
 import "./css/App.css";
 
+function getArticle(id) {
+  console.log(id);
+  axios
+    .get(
+      `http://localhost:8080/api/collections/get/Post?token=79e0270984c18ff8447814563d5a1f&filter[_id]=${id}`
+    )
+    .then(response => {
+      console.log(response);
+    });
+}
+
 function App() {
+  const [posts, updatePosts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "http://localhost:8080/api/collections/get/Post?token=79e0270984c18ff8447814563d5a1f"
+      )
+      .then(response => {
+        console.log(response);
+        updatePosts(response.data.entries);
+      });
+  }, []);
+
   return (
     <Router>
       <div className="App">
         <header className="App__header">{}</header>
         <main className="App__main">
-          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            render={() => <Home posts={posts} getArticle={getArticle} />}
+          />
           <Route path="/blog" component={Blog} />
           <Route path="/list" component={List} />
         </main>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Link, Route, BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 import Home from './components/Home';
 import Blog from './components/Blog';
@@ -9,7 +9,7 @@ import './css/App.css';
 function App() {
   const [posts, updatePosts] = useState([]);
   const [selectedPost, updateSelectedPost] = useState({});
-  const [author, updateAuthor] = useState([]);
+  const [authors, updateAuthors] = useState([]);
 
   useEffect(() => {
     axios
@@ -34,21 +34,27 @@ function App() {
       });
   }
 
-  function getAuthor(id) {
+  function getAuthors(id) {
     axios
       .get(
         'https://cockpit-mandatory-cms1.devspace.host/api/collections/get/Author?token=42222d25d287392adc01146049c75b'
       )
       .then(response => {
+        console.log('fafsa');
         console.log(response);
-        updateAuthor(response);
+        updateAuthors(response);
       });
   }
 
   return (
     <Router>
       <div className='App'>
-        <header className='App__header'>{}</header>
+        <header className='App__header'>
+          <Link to='/'>Home</Link>
+          <Link to='/authors' onClick={_ => getAuthors()}>
+            Authors
+          </Link>
+        </header>
         <main className='App__main'>
           <Route
             exact
@@ -61,7 +67,9 @@ function App() {
               render={() => <Blog selectedPost={selectedPost} />}
             />
           ) : null}
-          <Route path='/list' component={List} />
+          {authors.data ? (
+            <Route path='/authors' render={() => <List authors={authors} />} />
+          ) : null}
         </main>
         <footer className='App__footer'>{}</footer>
       </div>

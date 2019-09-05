@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 function Blog(props) {
   const post = props.selectedPost.data.entries[0];
@@ -17,7 +18,7 @@ function Blog(props) {
           );
         })}
       </ul>
-      <p className='Blog__post'>{post.Post}</p>
+      <ReactMarkdown className='Blog__post' source={post.Post} />
     </div>
   );
 }

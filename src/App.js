@@ -10,17 +10,25 @@ function App() {
   const [posts, updatePosts] = useState([]);
   const [selectedPost, updateSelectedPost] = useState({});
   const [authors, updateAuthors] = useState([]);
+  const [page, updatePage] = useState(0);
 
   useEffect(() => {
+    getArticles();
+  }, []);
+
+  function getArticles(skip) {
+    console.log(skip);
+    if (!skip) skip = 0;
+
     axios
       .get(
-        'https://cockpit-mandatory-cms1.devspace.host/api/collections/get/Article?token=42222d25d287392adc01146049c75b'
+        `https://cockpit-mandatory-cms1.devspace.host/api/collections/get/Article?limit=${5}&skip=${skip}&token=42222d25d287392adc01146049c75b`
       )
       .then(response => {
         console.log(response);
         updatePosts(response.data.entries);
       });
-  }, []);
+  }
 
   function getArticle(id) {
     console.log(id);
@@ -59,7 +67,15 @@ function App() {
           <Route
             exact
             path='/'
-            render={() => <Home posts={posts} getArticle={getArticle} />}
+            render={() => (
+              <Home
+                posts={posts}
+                page={page}
+                updatePage={updatePage}
+                getArticle={getArticle}
+                getArticles={getArticles}
+              />
+            )}
           />
           {selectedPost.data ? (
             <Route

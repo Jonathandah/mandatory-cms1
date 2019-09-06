@@ -6,6 +6,10 @@ import Blog from "./components/Blog";
 import List from "./components/List";
 import "./css/App.css";
 
+//ber om ursäkt för dålig namngivnin på komponenterna.
+//Blog = enskil artikel
+//List = lista på författarna
+
 function App() {
   const [posts, updatePosts] = useState([]);
   const [selectedPost, updateSelectedPost] = useState({});

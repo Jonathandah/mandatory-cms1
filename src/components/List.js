@@ -1,11 +1,12 @@
 import React from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import "../css/Authors.css";
 
 function List(props) {
   console.log(props);
   const authors = props.authors.data.entries;
   return (
     <div className="List">
+      <h1 className="List__title">Authors</h1>
       <ul className="List__list">
         {authors.map(i => {
           console.log(i);
@@ -16,11 +17,13 @@ function List(props) {
                 : (console.log(i.Avatar.path),
                   (
                     <img
+                      className="List__list__author__avatar"
                       src={
                         "https://cockpit-mandatory-cms1.devspace.host/" +
                         i.Avatar.path
                       }
-                    ></img>
+                      alt={"avatar"}
+                    />
                   ))}
               <h2 className="List__list__author__name">{i.Author}</h2>
               <p className="List__list__author__info">{i.Description}</p>

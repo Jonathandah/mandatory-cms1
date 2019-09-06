@@ -11,11 +11,17 @@ function List(props) {
           console.log(i);
           return (
             <li key={i._id} className="List__list__author">
-              {i.Avatar === "" ? (
-                console.log("ingen bild")
-              ) : (
-                <img src={i.Avatar.path}></img>
-              )}
+              {i.Avatar === ""
+                ? console.log("ingen bild")
+                : (console.log(i.Avatar.path),
+                  (
+                    <img
+                      src={
+                        "https://cockpit-mandatory-cms1.devspace.host/" +
+                        i.Avatar.path
+                      }
+                    ></img>
+                  ))}
               <h2 className="List__list__author__name">{i.Author}</h2>
               <p className="List__list__author__info">{i.Description}</p>
             </li>

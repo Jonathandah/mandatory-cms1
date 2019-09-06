@@ -1,23 +1,23 @@
-import React from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import React from "react";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 
 function List(props) {
   console.log(props);
   const authors = props.authors.data.entries;
   return (
-    <div className='List'>
-      <ul className='List__list'>
+    <div className="List">
+      <ul className="List__list">
         {authors.map(i => {
           console.log(i);
           return (
-            <li key={i._id} className='List__list__author'>
-              {i.Avatar === '' ? (
-                console.log('ingen bild')
+            <li key={i._id} className="List__list__author">
+              {i.Avatar === "" ? (
+                console.log("ingen bild")
               ) : (
                 <img src={i.Avatar.path}></img>
               )}
-              <h2 className='List__list__author__name'>{i.Author}</h2>
-              <p className='List__list__author__info'>{i.Description}</p>
+              <h2 className="List__list__author__name">{i.Author}</h2>
+              <p className="List__list__author__info">{i.Description}</p>
             </li>
           );
         })}
